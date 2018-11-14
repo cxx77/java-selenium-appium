@@ -1,1 +1,107 @@
+第一节：利用geckodirver启动firefox
+      import java.util.concurrent.TimeUnit;
+      import org.openqa.selenium.WebDriver;
+      import org.openqa.selenium.firefox.FirefoxDriver;
+
+
+      public class LanuchFirefox {
+
+        public static void main(String[] args) throws InterruptedException {
+          // TODO Auto-generated method stub
+          //System.setProperty("webdriver.firefox.marionette", ".\\Tools\\geckodriver.exe"); 48版本以下
+          
+          //除了加入火狐驱动文件外，还需要配置firefox的路径
+          System.setProperty("webdriver.gecko.driver", "D:\\Program Files\\eclipse-workspace\\Selenium_Lesson\\tools\\geckodriver.exe");
+          System.setProperty("webdriver.firefox.bin", "D:\\Program Files\\Mozilla Firefox\\firefox.exe");
+
+          WebDriver driver = new FirefoxDriver();
+          driver.manage().window().maximize();
+          //driver.manage().timeouts().implicitlyWait(8, TimeUnit.SECONDS);
+
+          driver.get("https://www.baidu.com");
+          Thread.sleep(5000);
+          System.out.println("当前打开的页面标题是："+driver.getTitle());
+
+          driver.quit();
+
+        }
+        
+        总结：
+
+              1. 介绍了Selenium 3.0上如何启动firefox版本大于48和低于48的情况
+
+              2. driver.get() 是打开站点，传入的参数是url
+
+              3. 知道了如何设置浏览器窗口最大化
+
+              4. 知道了如何设置隐性等待时间；Thread.sleep(5000) （5s）
+
+              5. driver.getTitle()是获取当前页面的title值，返回的是字符串对象
+
+              6. driver.quit()是关闭并退出浏览器。
+              
+
+第二节：利用chromedriver自动化chrome
+      import java.util.concurrent.TimeUnit;
+      import org.openqa.selenium.WebDriver;
+      import org.openqa.selenium.chrome.ChromeDriver;
+      import org.openqa.selenium.chrome.ChromeOptions;
+
+      public class LaunchChrome {
+
+        public static void main(String[] args) throws InterruptedException {
+          // TODO Auto-generated method stub
+
+          System.setProperty("webdriver.chrome.driver", "./tools/chromedriver.exe");
+          System.setProperty("webdriver.chrome.bin", "C:\\Users\\Administrator\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe");
+
+          ChromeOptions opiions=new ChromeOptions();
+          opiions.addArguments("--start-maximized");
+
+          WebDriver driver = new ChromeDriver(opiions);
+          String url = "https://www.baidu.com";
+          driver.get(url);
+
+          //driver.manage().window().maximize();  报错
+          Thread.sleep(2000);
+          System.out.println("当前页面的标题是："+driver.getTitle());
+
+          driver.quit();
+        }
+
+    }
+    
+
+第三节：利用IEDriverServer自动化IE
+      import java.util.concurrent.TimeUnit;
+      import org.openqa.selenium.WebDriver;
+      import org.openqa.selenium.ie.InternetExplorerDriver;;
+
+      public class LaunchIE {
+
+        public static void main(String[] args) throws InterruptedException{
+          // TODO Auto-generated method stub
+          System.setProperty("webdriver.ie.driver", "./tools/IEDriverServer.exe");
+          
+          //System.setProperty("webdriver.firefox.bin", "D:\\Program Files\\Mozilla Firefox\\firefox.exe"); IE安装在默认位置，不需要这一步
+
+          WebDriver driver = new InternetExplorerDriver();
+          driver.manage().window().maximize();
+          //driver.manage().timeouts().implicitlyWait(8, TimeUnit.SECONDS);
+
+          driver.get("https://www.baidu.com");
+          Thread.sleep(5000);
+          System.out.println("当前打开的页面标题是："+driver.getTitle());
+
+          driver.quit();
+        }
+
+      }
+    
+    
+第四节：
+
+              
+        
+              
 
