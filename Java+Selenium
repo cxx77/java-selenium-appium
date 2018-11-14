@@ -262,14 +262,63 @@
                             System.setProperty("webdriver.chrome.bin", "C:\\Users\\Administrator\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe");
 
                               WebDriver driver = new ChromeDriver();
+                              
+                              // 按下F11，可以看到全屏效果
+                              driver.get("https://www.baidu.com");
+                              driver.manage().window().fullscreen();
+                              
+                              driver.findElement(By.id("kw")).sendKeys("selenium");
 
                               // 注意targetPosition是一个点对象，把一个点作为参数传入，不能直接写（300， 600）
                               Point targetPosition = new Point(300, 600);
                               driver.manage().window().setPosition(targetPosition);
                               System.out.println(driver.manage().window().getPosition());
-                              driver.quit();
+                              
+                              // 注意targetSize是一个对象传入，也不可以直接写成 1024*768
+                              Dimension targetSize = new Dimension(1024, 768); 
+                              driver.manage().window().setSize(targetSize);
+                              System.out.println(driver.manage().window().getSize());
                         }
                   }
+
+
+第七节：
+    static关键字：
+      Java中用static关键字的方法，就叫静态方法，静态方法只能被类本身调用，不能被类的实例对象调用（会出现警告，类型不匹配）
+      而没有static关键字的方法，在类中叫实例方法，任何一个实例对象都能调用实例方法。同样，类变量也和方法类似。
+            public class Hello {
+
+                  public static String name;
+
+                  public static void DoSomethingWithStatic(){
+                        System.out.println("调用了static方法");
+                  }
+
+                  public void DoSomethingWithNoStatic(){
+                        System.out.println("调用了非static方法");
+                  }
+            }
+            
+            public class MyClass {
+                  public static void main(String[] args) {
+                        //调用静态方法和调用实例方法
+                        Hello hello = new Hello();
+                        // 类本身调用静态方法
+                        Hello.DoSomethingWithStatic();
+                        // 实例对象调用实例方法，如果实例调用静态方法，会出现警告
+                        hello.DoSomethingWithNoStatic();
+
+                        // 类本身调用静态成员变量
+                        Hello.name = "Anthony";
+                        System.out.println(Hello.name);
+                        // 实例对象调用静态成员变量，会出现警告：The static field Hello.name should be accessed in a static way
+                        hello.name = "Tom";
+                        System.out.println(hello.name);
+                  }
+            }
+            
+      总结：
+            用到了static修饰的方法或者变量，只能被类本身调用，没有static修饰的方法是实例方法，实例对象能调用实例方法。
 
 
 
