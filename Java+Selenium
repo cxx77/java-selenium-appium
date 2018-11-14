@@ -120,7 +120,159 @@
              第三点：有点难找这样的特征元素，而且有时候找到了也不一定是正确的。
              
              下面的代码就用页面的title来作为我们判断的依据：
+             
+                  import java.util.concurrent.TimeUnit;
+                  import org.openqa.selenium.WebDriver;
+                  import org.openqa.selenium.chrome.ChromeDriver;
+                  import org.openqa.selenium.chrome.ChromeOptions;
+
+                  public class FirstScript {
+
+                        public static void main(String[] args) throws InterruptedException {
+                              // TODO Auto-generated method stub
+                              System.setProperty("webdriver.chrome.driver", "./tools/chromedriver.exe");
+
+                              String loc = "C:\\Users\\Administrator\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe";
+                              System.setProperty("webdriver.chrome.bin", loc);
+
+                              ChromeOptions opt = new ChromeOptions();
+                              opt.addArguments("--start-maximized");
+                              WebDriver driver = new ChromeDriver(opt);
+
+                              driver.get("http://news.baidu.com");
+                              Thread.sleep(1000);
+
+                              String title = "百度一下，你就知道";
+                              try {
+                                    assert title.equals(driver.getTitle());
+                                    //if(title.equals(driver.getTitle()))
+                                    System.out.println("Test pass");
+                              }catch(Exception e){
+                                    System.out.println("Test fail");
+                                    e.printStackTrace();
+                              }
+                              finally{
+                                    System.out.println(driver.getTitle());
+                                    driver.quit();
+                              }
+
+                        }
+ 
+ 
+第五节：
+      从代码角度去解释启动firefox的过程：
+            https://blog.csdn.net/u011541946/article/details/73090988
+            
+      构造函数总结：
+            1）构造函数名称一定要和类名称保持一致。
+
+            2）构造函数会在对象创建过程是调用
+
+            3）构造函数可以有多个，用参数个数和参数类型区分
+
+            4）构造函数内部没有返回语句
+
+      方法的重载：
+            方法的重载和构造函数的调用有一点相同
+            
+            求两个小数的求和甚至两个字符串相连的结果。难道我们要分别取一个名称，写小数相加和字符串相加？
+            在编程语言中为了解决这个问题，引入了方法重载的概念，重载的基本特点就是：
+                  方法名称相同，但是方法参数类型不同，参数类型不同，包括，参数个数和参数变量类型不同。
+                  如何用方法重载的思想去实现两个东西相加，包括整数，小数和字符串，如果是字符串，就是叫字符串连接，就不叫相加。 
+
+                  public class MyClass {
+
+                        public static void main(String[] args) {
+
+                              System.out.println(Add(5,9));
+                              System.out.println(Add(5.8,9.34));
+                              System.out.println(Add("Hello","Java"));
+                        }
+
+                        public static int Add(int a, int b){
+
+                              return (a + b);
+                        }
+
+                      public static double Add(double a, double b){
+
+                              return (a + b);
+                        }
+
+                      public static String Add(String a, String b){
+
+                              return (a + b);
+                        }
+                  }
+
+
+第六节：
+      Timeout接口相关方法介绍：
+            https://blog.csdn.net/u011541946/article/details/73175068
+            
+            Timeout接口描述文字部分，下面有三个常见的接口。
+
+                  implicitlyWait(long time, TimeUnit unit);
+
+                  setScriptTimeout(long time, TimeUnit unit);
+
+                  pageLoadTimeout(long time, TimeUnit unit);
+
+                  implicitlyWait()：
+                        隐式时间等待：隐式时间等待是在查找元素的时候，设置一个最大时间值，如果driver第一次没有找到网页元素，那么就继续找，直到消耗了设置的最大时间值
+                                    还是没有找到，那么就抛出没有找到元素的异常。
+                                    如果在设置时间范围内就找到了该元素，那么就执行下一行代码，不需要再等时间，这就是隐式等待的含义。
+                                    所以，隐式时间等待一般结合查找网页元素一起。
+
+                  setScriptTimeout()：在设置规定的时间内，等待异步脚本的执行结束，而不是里面抛出错误。
+                                      这个在执行javascript脚本的时候可能会使用，后面我们介绍了使用Javascript脚本执行Selenium相关操作后在介绍具体使用方法。
+
+                  pageLoadTimeout()：字面意思就网页加载超时，作用就是在设置规定时间内，等待网页完整加载完成，而不是里面抛出错误。
+                                     我们知道如果网速慢，或者网页元素太多，例如网页做了大面积渲染，肯定会造成网页加载速度变慢。
+                                     这个接口的作用就是，来处理这类问题的。
+                                     设置时间等待的语句应该换成这个语句更合适一些，毕竟我们的目的就是等待网页加载完成。
+                                     
+                                     driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
+                                     
+                   Selenium方法或者接口分成三类:
+                        第一类是driver相关，也就是操作浏览器本身设置
+                        第二类是元素相关，就是一些元素的点击，输入等操作
+                        第三类是一些工具支持类，例如截图，日志输出，事件监听。
+                        
+                        
+      window接口相关方法介绍：
+            windows接口下有几个方法，主要是用来控制浏览器窗口设置，例如窗口大小，最大，最小，全屏，位置：
+                  void setSize(Dimension targetSize);
+                  void setPosition(Point targetPosition);
+                  Dimension getSize();
+                  Point getPosition();
+                  void maximize();
+                  void fullscreen();
                   
+            浏览器位置设置的自动化脚本：
+                  import org.openqa.selenium.Point;
+                  import org.openqa.selenium.WebDriver;
+                  import org.openqa.selenium.chrome.ChromeDriver;
+
+                  public class PageLoadTest {
+
+                        public static void main(String[] args) {
+
+                            System.setProperty("webdriver.chrome.driver", "./tools/chromedriver.exe");
+                            System.setProperty("webdriver.chrome.bin", "C:\\Users\\Administrator\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe");
+
+                              WebDriver driver = new ChromeDriver();
+
+                              // 注意targetPosition是一个点对象，把一个点作为参数传入，不能直接写（300， 600）
+                              Point targetPosition = new Point(300, 600);
+                              driver.manage().window().setPosition(targetPosition);
+                              System.out.println(driver.manage().window().getPosition());
+                              driver.quit();
+                        }
+                  }
+
+
+
 
 
 
