@@ -106,6 +106,46 @@ Abstract类和方法：
 	 1）对象的数据封装特性彻底消除了传统结构方法中数据与操作分离所带来的种种问题，提高了程序的可复用性和可维护性，降低了程序员保持数据与操作内容的负担。
 	 2）对象的数据封装特性还可以把对象的私有数据和公共数据分离开，保护了私有数据，减少了可能的模块间干扰，达到降低程序复杂性、提高可控性的目的。
 
+ArrayList：
+	import java.util.ArrayList;
+	public class MyClass {
+	
+		public static void main(String[] args){
+			// 普通的数组，我们是这样定义的
+			//int simple_array[] = new int[5]; // [1,2,3,4,5]
+
+			ArrayList<Integer> mylist = new ArrayList<Integer>(5);
+			mylist.add(1);
+			mylist.add(5);
+			mylist.add(3);
+			mylist.add(25);
+			mylist.add(99);
+
+			// 遍历数组
+			for(Integer x : mylist){
+				System.out.println(x);
+			}
+
+			System.out.println("Size= "+mylist.size());
+
+			// 删除一个元素，根据索引删除
+			mylist.remove(2); // 相当于删除了3这个元素
+			for(Integer x1 : mylist){
+				System.out.println(x1);
+			}
+			System.out.println("Size= "+mylist.size());
+
+			// 更新某一元素的值
+			mylist.set(1, 55);
+			// 打印出来，检查下是不是把5改成55
+			for(Integer x1 : mylist){
+				System.out.println(x1);
+			}
+		}
+	}
+	
+	ArrayList是一个可变化的数组。它实现了List的全部功能，主要有插入元素，编辑元素，删除元素，遍历元素。而Array虽然高效；但是其容量固定且无法动态改变。
+	基于效率和类型检验，应尽可能使用Array，无法确定数组大小时才使用ArrayList！ArrayList是Array更复杂的版本。
 	
 
 第一节：利用geckodirver启动firefox
@@ -574,6 +614,47 @@ Abstract类和方法：
 		WebElement xiaomi_link = driver.findElement(By.linkText("小米"));
 		xiaomi_link.click();
 		Thread.sleep(1000);
+		
+第十一节：
+	利用Javascript处理竖向滚动条：https://blog.csdn.net/u011541946/article/details/73656609
+	
+		import java.util.concurrent.TimeUnit;
+		import org.openqa.selenium.By;
+		import org.openqa.selenium.JavascriptExecutor;
+		import org.openqa.selenium.WebDriver;
+		import org.openqa.selenium.WebElement;
+		import org.openqa.selenium.chrome.ChromeDriver;
+
+		public class ElementOpration {
+			public static void main(String[] args) throws Exception {  
+
+			System.setProperty("webdriver.chrome.driver", ".\\Tools\\chromedriver.exe");  
+
+			WebDriver driver = new ChromeDriver();  
+
+			driver.manage().window().maximize();  
+
+			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+
+			driver.get("http://blog.csdn.net/u011541946");  
+
+			Thread.sleep(1000);
+
+			// 定义csdn底部 公司简介 这个元素
+			WebElement element = driver.findElement(By.xpath("//*/dd[@class='foot_sub_menu']/a[1]"));
+			//创建一个javascript 执行实例
+			JavascriptExecutor je = (JavascriptExecutor) driver;
+
+			//执行js语句，拖拽浏览器滚动条，直到该元素到底部，马上就不可以见
+			je.executeScript("arguments[0].scrollIntoView(true);",element);
+		    }  
+		}
+		
+	关于scrollIntoView(true)，应该这么理解，拖动到可以看到这个元素为止，如果这个地方ture改成false，也是可以，拖动效果有一点差别，你可以观察下。一般情况，ture或者false都可以。
+
+
+		
+		
 
 
 
