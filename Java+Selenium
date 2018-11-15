@@ -490,7 +490,7 @@ Abstract类和方法：
             
       
 第十节：
-	获取当前页面title和url：
+	1. 获取当前页面title和url：
 		String title = driver.getTitle();
 		System.out.println(title);
 
@@ -506,7 +506,7 @@ Abstract类和方法：
 	之前我们都是从driver.findElement(By.id("xxx")).元素相关方法()来进行操作，以后建议写成本文这样的写法，脚本看起来更加清晰，高效。
 	
 
-	获取当前页的源码:
+	2. 获取当前页的源码:
 		driver.get("https://www.baidu.com");  
                	Thread.sleep(1000);
        
@@ -519,7 +519,7 @@ Abstract类和方法：
 		
 		拿到源码，如何去查找我们需要的信息，需要一点前端知识，和正则匹配的内容。
 		
-	获取浏览器窗体的句柄:
+	3. 获取浏览器窗体的句柄:
 		句柄，有时候浏览器的窗口句柄，也叫windows id，英文单词更好理解。
 		你打开了一个浏览器，你开一个tab，就生成了一个id，这个id直到你关闭这个tab才会消失。
 		如果你在一个浏览器上打开多个tab，那么就有多个windows id。
@@ -542,6 +542,38 @@ Abstract类和方法：
 		System.out.println(driver.getWindowHandles());
 		打印出来是一个list/set：
 			[CDwindow-49451fa1-b9ab-4c6a-a94f-b677637d8b50, CDwindow-d3238ea1-d742-4595-acb2-c08f2b1f5d6b]
+			
+	4. 浏览器退出quit和close的区别:
+		close方法是，关闭当前窗口，这个当前，如何理解，就是driver实例操作的页面，叫当前。
+		如果当前窗口只有一个tab，那么这个close方法就相当于关闭了浏览器。
+		quit方法就是直接退出并关闭所有关联的tab窗口。
+		所以，close方法一般关闭一个tab，quit方法才是我们认为的完全关闭浏览器方法。
+		
+		一般来说，我们在自动化测试脚本运行完之后，需要恢复到干净环境，所以，一般都采用driver.quit（）来直接关闭浏览器。
+
+	5. webdriver处理浏览器多窗口切换：
+		switch.to.window(handle)
+		
+		driver.get("https://www.jd.com/");  
+       		Thread.sleep(1000);
+
+		//点击京东左侧菜单中的 手机
+		WebElement phone_link = driver.findElement(By.linkText("手机"));
+		phone_link.click();
+		Thread.sleep(1000);
+
+		// 获取当前页面句柄  
+		String handle = driver.getWindowHandle();  
+		// 获取所有页面的句柄，并循环判断不是当前的句柄 
+		for (String handles : driver.getWindowHandles()) {  
+		    if (handles.equals(handle))  
+			continue;  
+		    driver.switchTo().window(handles);  
+		}  
+
+		WebElement xiaomi_link = driver.findElement(By.linkText("小米"));
+		xiaomi_link.click();
+		Thread.sleep(1000);
 
 
 
