@@ -93,6 +93,19 @@ Abstract类和方法：
 		1）如果前后两个都是class,那么就用extends
 		2）如果前面一个是class,后面一个是interface，那么就用implements
 		3）如果前后两个都是interface，就用extends。
+
+封装:https://blog.csdn.net/u011541946/article/details/73477428
+	 封装是把过程和数据包围起来，对数据的访问只能通过已定义的接口。
+	 面向对象计算始于这个基本概念，即现实世界可以被描绘成一系列完全自治、封装的对象，这些对象通过一个受保护的接口访问其他对象。
+	 封装是一种信息隐藏技术，在java中通过关键字private，protected和public实现封装。
+	 
+	 什么是封装？
+		 封装把对象的所有组成部分组合在一起，封装定义程序如何引用对象的数据，封装实际上使用方法将类的数据隐藏起来控制用户对类的修改和访问数据的程度。 
+		 适当的封装可以让程式码更容易理解和维护，也加强了程式码的安全性。
+		 
+	 1）对象的数据封装特性彻底消除了传统结构方法中数据与操作分离所带来的种种问题，提高了程序的可复用性和可维护性，降低了程序员保持数据与操作内容的负担。
+	 2）对象的数据封装特性还可以把对象的私有数据和公共数据分离开，保护了私有数据，减少了可能的模块间干扰，达到降低程序复杂性、提高可控性的目的。
+
 	
 
 第一节：利用geckodirver启动firefox
@@ -475,8 +488,63 @@ Abstract类和方法：
       findElements举例：
             indElements是用来查找一组元素，而findElement是用来查找匹配表达式的第一个元素
             
-            
-            
+      
+第十节：
+	获取当前页面title和url：
+		String title = driver.getTitle();
+		System.out.println(title);
+
+		WebElement news_link = driver.findElement(By.linkText("新闻"));
+		news_link.click();
+		Thread.sleep(1000);
+
+		String current_url = driver.getCurrentUrl();
+
+		assert current_url.equals("http://news.baidu.com");
+	
+	getCurrentUrl()是获取当前网页的URL之外，还需要学会先定义一个WebElement对象,通过element.方法名称（）的方式去进行元素相关操作。
+	之前我们都是从driver.findElement(By.id("xxx")).元素相关方法()来进行操作，以后建议写成本文这样的写法，脚本看起来更加清晰，高效。
+	
+
+	获取当前页的源码:
+		driver.get("https://www.baidu.com");  
+               	Thread.sleep(1000);
+       
+		WebElement news_link = driver.findElement(By.linkText("新闻"));
+		news_link.click();
+		Thread.sleep(1000);
+
+		// 打印当前页面的源码
+		System.out.println(driver.getPageSource());
+		
+		拿到源码，如何去查找我们需要的信息，需要一点前端知识，和正则匹配的内容。
+		
+	获取浏览器窗体的句柄:
+		句柄，有时候浏览器的窗口句柄，也叫windows id，英文单词更好理解。
+		你打开了一个浏览器，你开一个tab，就生成了一个id，这个id直到你关闭这个tab才会消失。
+		如果你在一个浏览器上打开多个tab，那么就有多个windows id。
+		为什么你关闭其中一个tab,但是不影响其他tab的显示，就是这个id的作用。
+		介绍如何获得浏览器窗体的句柄或者叫编号，为后面的driver实例在多个窗体之间切换做准备。
+		
+		driver.get("https://www.baidu.com");  
+       		Thread.sleep(1000);
+
+		// 打印当前页面的的句柄
+		System.out.println(driver.getWindowHandle());
+		
+		
+		driver.get("https://www.baidu.com");  
+       		Thread.sleep(1000);
+
+		WebElement setHome_link = driver.findElement(By.partialLinkText("设为主页"));
+		setHome_link.click();
+		Thread.sleep(1000);
+		System.out.println(driver.getWindowHandles());
+		打印出来是一个list/set：
+			[CDwindow-49451fa1-b9ab-4c6a-a94f-b677637d8b50, CDwindow-d3238ea1-d742-4595-acb2-c08f2b1f5d6b]
+
+
+
       
 
             
