@@ -1,3 +1,12 @@
+java基础语法 -- public/protected/private/this介绍
+      https://blog.csdn.net/u011541946/article/details/73215841
+      
+继承语法：https://blog.csdn.net/u011541946/article/details/73253463 
+         父类和子类的说法，父类就是被继承的类，子类就是将要继承父类的类。
+         使用继承，是为了减少代码的重复，增加代码的复用性。
+         
+
+
 第一节：利用geckodirver启动firefox
       import java.util.concurrent.TimeUnit;
       import org.openqa.selenium.WebDriver;
@@ -348,7 +357,13 @@
                     Thread.sleep(2000);
 
                     // 刷新当前页
+    
                     driver.navigate().refresh();
+                    
+  第九节：
+      
+            
+      
 
 
 
