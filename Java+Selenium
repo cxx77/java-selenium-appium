@@ -1,9 +1,29 @@
 java基础语法 -- public/protected/private/this介绍
-      https://blog.csdn.net/u011541946/article/details/73215841
+          https://blog.csdn.net/u011541946/article/details/73215841
       
 继承语法：https://blog.csdn.net/u011541946/article/details/73253463 
          父类和子类的说法，父类就是被继承的类，子类就是将要继承父类的类。
          使用继承，是为了减少代码的重复，增加代码的复用性。
+         
+方法重写重写：https://blog.csdn.net/u011541946/article/details/73351258
+             Java编程语言中，子类可继承父类中的方法，而不需要重新编写相同的方法。但有时子类并不想原封不动地继承父类的方法，而是想作一定的修改，这就需要采用方法的重写。方法重写又称方法覆盖。
+
+            方法的重写有几个特点：
+                  1）发生在子类，有子类就有继承
+
+                  2）父类方法的参数列表必须完全与被子类重写的方法的参数列表相同
+
+                  3）父类的返回类型必须与被子类重写的方法返回类型相同
+
+                  4）Java中规定，被子类重写的方法不能拥有比父类方法更加严格的访问权限
+                  
+            方法重写与方法重载的根本区别就是：
+                  方法重写是在子类和父类之间，而方法重载是在同一个类里面。
+                  方法重写，子类和父类方法必须保持，返回类型，方法名称，参数个数和参数类型完全保持一致。
+                  而方法重载，只有方法名称相同，其他都可以不相同。
+
+            final中的一点：final方法不能被子类的方法覆盖
+
          
 
 
@@ -361,7 +381,36 @@ java基础语法 -- public/protected/private/this介绍
                     driver.navigate().refresh();
                     
   第九节：
+      findElement之By XPath：
+            XPath一般在实际自动化测试项目中用到比较多，虽然有8种元素定位方法，但是XPath如果写熟练了，基本上可以用XPath完成百分之95以上的元素定位。例如，在上面的两个元素，我可以用好几种XPath表达式去描述这个元素。
+                  百度搜索输入框:
+                        .//*/input[@id='kw']
+
+                        .//*/input[@name='wd']
+
+                        .//*/input[@class='s_ipt']
+
+                  搜索提交按钮：
+                        .//*/input[@id='su']
+
+                        .//*/input[@value='百度一下']
+
+                        .//*/input[@class='bg s_btn']
+                        
+                        
+      findElement之By LinkText：
+            
+		//By linkText 查找元素
+		driver.findElement(By.linkText("新闻")).click();
+		Thread.sleep(1000);
+            
+      findElements举例：
+            indElements是用来查找一组元素，而findElement是用来查找匹配表达式的第一个元素
+            
+            
+            
       
+
             
       
 
