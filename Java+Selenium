@@ -54,10 +54,46 @@ Abstract类和方法：
 			}
 			getAge()里面写实现方法，这个地方就会报错
 			
-			
+			子类实现：
+			public class Student_ABC extends Student {
+				public int getAge(){
+					return 15;
+				} 
+			}
+
+			public static void main(String[] args) {
+				Student st_abc = new Student_ABC();
+				System.out.println(st_abc.getAge());
+				}
+			}
 			
 		2）抽象方法不需要实现，只需要声明，让子类去实现
 
+接口：https://blog.csdn.net/u011541946/article/details/73441439
+	接口和抽象类有点类似，接口不是类，接口只是声明了方法，没有具体实现。
+	在JAVA编程语言中是一个抽象类型，是抽象方法的集合，接口通常以interface来声明。
+	一个类通过继承接口的方式，从而来继承接口的抽象方法。接口无法被实例化，但是可以被实现。
+	一个实现接口的类，必须实现接口内所描述的所有方法，否则就必须声明为抽象类。
+	
+	1. 先来了解接口的声明
+		Java中是用 interface 声明接口的，类是用class来声明。
+			public interface Student {
+				public int getAge();
+			}
+	2. 接口的实现
+		接口的实现，需要继承这个接口的类去重写方法来实现。
+			public class Student_ABC implements Student {
+				public int getAge(){
+					return 15;
+				}
+			}
+		在Java中接口的实现需要用implements关键字，关键字后面跟着接口。
+	
+	3.什么时候用implements和extends
+		1）如果前后两个都是class,那么就用extends
+		2）如果前面一个是class,后面一个是interface，那么就用implements
+		3）如果前后两个都是interface，就用extends。
+	
 
 第一节：利用geckodirver启动firefox
       import java.util.concurrent.TimeUnit;
