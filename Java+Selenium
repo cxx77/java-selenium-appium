@@ -653,6 +653,49 @@ ArrayList：
 	关于scrollIntoView(true)，应该这么理解，拖动到可以看到这个元素为止，如果这个地方ture改成false，也是可以，拖动效果有一点差别，你可以观察下。一般情况，ture或者false都可以。
 
 
+第十二节：
+	iframe切换的问题：
+		webdriver在处理定位元素报错，提示没有这样的元素。
+		这个时候，有可能是你测试的网页，采用了frame技术。什么是frame，简单来说，就是把一个网页划分成多个子页面。
+		https://data.pharmacodia.com/web/homePage/index?ns=1&ts=1&str=YWSJ
+		
+		webdriver默认查找的元素都是Top window这层，如果有些元素内嵌在frame内部，需要先使用switch to语句，切换到frame内部，
+		然后去操作元素，操作完了之后，需要switch out到default区域，也就是Top window。
+		
+		import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class Chrome_Iframe {
+
+	public static void main(String[] args) throws InterruptedException{
+		// TODO Auto-generated method stub
+		//System.setProperty("webdriver.chrome.driver", "./tools/chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver", "./tools/chromedriver.exe");
+		
+		String loc = "C:\\Users\\Administrator\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe";
+		System.setProperty("webdriver.chrome.bin", loc);
+		
+		WebDriver driver = new ChromeDriver();
+		String url = "https://data.pharmacodia.com/web/homePage/index?ns=1&ts=1&str=YWSJ";
+		driver.get(url);
+		driver.manage().timeouts().implicitlyWait(8, TimeUnit.SECONDS);
+		driver.manage().window().maximize();
+		
+		driver.switchTo().frame("rightMain"); //换到rightMain frame
+		WebElement element = driver.findElement(By.xpath("//*[@id='search_top']/div/div[1]/div/div/span[1]")); 
+		element.click();
+		
+		Thread.sleep(5);
+		
+		driver.switchTo().defaultContent(); //回到Top-window页面
+		driver.findElement(By.xpath("//*[@id='noLoginAlert']/div/button")).click(); //点击登录按钮
+	}
+}
+		
 		
 		
 
