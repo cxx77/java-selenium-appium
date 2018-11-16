@@ -808,7 +808,50 @@ ArrayList：
 	第一个accept()方法就是我们上面的示例，dismiss()就是点击alert框上面的取消按钮，getText()就是获取alert内部的文字
 	sendKeys方法就像文章开头提到的输入邮件预定内容一样，上面还有两个关于证书的，先不用管，暂时没用过。
 
+第十五节：
+	利用JS处理元素高亮显示
+	用javascript让测试过程中的元素高亮显示，例如在登录框，让输入框背景颜色设置成黄色，边框设置2个像素，颜色是红色。
+	这个问题，一家公司的笔试题上有。
+	
+	package 测试内容高亮显示;
 
+	import java.util.concurrent.TimeUnit;
+
+	import org.openqa.selenium.By;
+	import org.openqa.selenium.WebDriver;
+	import org.openqa.selenium.WebElement;
+	import org.openqa.selenium.chrome.ChromeDriver;
+	import org.openqa.selenium.JavascriptExecutor;;
+
+	public class ElementOption {
+
+		public static void main(String[] args) {
+			// TODO Auto-generated method stub
+			System.setProperty("webdriver.chrome.driver", "../Selenium_Lesson/tools/chromedriver.exe");
+
+			String loc = "C:\\Users\\Administrator\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe";
+			System.setProperty("webdriver.chrome.bin", loc);
+
+			WebDriver driver = new ChromeDriver();
+			String url = "http://www.baidu.com";
+			driver.get(url);
+			driver.manage().timeouts().implicitlyWait(8, TimeUnit.SECONDS);
+			driver.manage().window().maximize();
+
+			WebElement element = driver.findElement(By.xpath("//*[@id='u1']/a[7]"));
+			element.click();
+			driver.findElement(By.xpath("//*[@id='TANGRAM__PSP_10__footerULoginBtn']")).click();
+
+			WebElement username = driver.findElement(By.xpath("//*[@id='TANGRAM__PSP_10__userName']"));
+			username.sendKeys("xixi77");
+			JavascriptExecutor js = (JavascriptExecutor) driver;
+			js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid red;');", username);
+
+			WebElement password = driver.findElement(By.xpath("//*[@id='TANGRAM__PSP_10__password']"));
+			password.sendKeys("xixi");
+			js.executeScript("arguments[0].setAttribute('style','background:blue; border:4px solid green;')", password);
+		}
+	}
 
       
 
