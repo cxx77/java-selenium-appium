@@ -654,7 +654,7 @@ ArrayList：
 
 
 第十二节：
-	iframe切换的问题：
+	iframe切换的问题：https://blog.csdn.net/u011541946/article/details/73695239
 		webdriver在处理定位元素报错，提示没有这样的元素。
 		这个时候，有可能是你测试的网页，采用了frame技术。什么是frame，简单来说，就是把一个网页划分成多个子页面。
 		https://data.pharmacodia.com/web/homePage/index?ns=1&ts=1&str=YWSJ
@@ -664,38 +664,114 @@ ArrayList：
 		
 		import java.util.concurrent.TimeUnit;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
+		import org.openqa.selenium.By;
+		import org.openqa.selenium.WebDriver;
+		import org.openqa.selenium.WebElement;
+		import org.openqa.selenium.chrome.ChromeDriver;
 
-public class Chrome_Iframe {
+		public class Chrome_Iframe {
 
-	public static void main(String[] args) throws InterruptedException{
-		// TODO Auto-generated method stub
-		//System.setProperty("webdriver.chrome.driver", "./tools/chromedriver.exe");
-		System.setProperty("webdriver.chrome.driver", "./tools/chromedriver.exe");
-		
-		String loc = "C:\\Users\\Administrator\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe";
-		System.setProperty("webdriver.chrome.bin", loc);
-		
-		WebDriver driver = new ChromeDriver();
-		String url = "https://data.pharmacodia.com/web/homePage/index?ns=1&ts=1&str=YWSJ";
-		driver.get(url);
-		driver.manage().timeouts().implicitlyWait(8, TimeUnit.SECONDS);
-		driver.manage().window().maximize();
-		
-		driver.switchTo().frame("rightMain"); //换到rightMain frame
-		WebElement element = driver.findElement(By.xpath("//*[@id='search_top']/div/div[1]/div/div/span[1]")); 
-		element.click();
-		
-		Thread.sleep(5);
-		
-		driver.switchTo().defaultContent(); //回到Top-window页面
-		driver.findElement(By.xpath("//*[@id='noLoginAlert']/div/button")).click(); //点击登录按钮
+			public static void main(String[] args) throws InterruptedException{
+				// TODO Auto-generated method stub
+				//System.setProperty("webdriver.chrome.driver", "./tools/chromedriver.exe");
+				System.setProperty("webdriver.chrome.driver", "./tools/chromedriver.exe");
+
+				String loc = "C:\\Users\\Administrator\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe";
+				System.setProperty("webdriver.chrome.bin", loc);
+
+				WebDriver driver = new ChromeDriver();
+				String url = "https://data.pharmacodia.com/web/homePage/index?ns=1&ts=1&str=YWSJ";
+				driver.get(url);
+				driver.manage().timeouts().implicitlyWait(8, TimeUnit.SECONDS);
+				driver.manage().window().maximize();
+
+				driver.switchTo().frame("rightMain"); //换到rightMain frame
+				WebElement element = driver.findElement(By.xpath("//*[@id='search_top']/div/div[1]/div/div/span[1]")); 
+				element.click();
+
+				Thread.sleep(5);
+
+				driver.switchTo().defaultContent(); //回到Top-window页面
+				driver.findElement(By.xpath("//*[@id='noLoginAlert']/div/button")).click(); //点击登录按钮
+			}
+		}
+
+第十三节：
+	单选和多选按钮操作：
+	package 单选多选;
+
+	import java.util.ArrayList;
+	import java.util.concurrent.TimeUnit;
+
+	import org.openqa.selenium.By;
+	import org.openqa.selenium.WebDriver;
+	import org.openqa.selenium.WebElement;
+	import org.openqa.selenium.chrome.ChromeDriver;
+
+	public class ElementOption {
+
+		public static void main(String[] args) {
+			// TODO Auto-generated method stub
+			System.setProperty("webdriver.chrome.driver", "./tools/chromedriver.exe");
+
+			String loc = "C:\\Users\\Administrator\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe";
+			System.setProperty("webdriver.chrome.bin", loc);
+
+			WebDriver driver = new ChromeDriver();
+			String url = "https://news.baidu.com";
+			driver.get(url);
+			driver.manage().timeouts().implicitlyWait(8, TimeUnit.SECONDS);
+			driver.manage().window().maximize();
+
+			ArrayList<WebElement> list = (ArrayList<WebElement>) driver.findElements(By.xpath("//*[@id='sbox']/tbody/tr/td[2]/p/label"));
+			//ArrayList<WebElement> list = (ArrayList<WebElement>) driver.findElements(By.xpath("//*/p[@class='search-radios']/input"));
+
+			int n=10;
+			while(n>0) {
+				for(WebElement ele: list) {
+					ele.click();
+				}
+				n--;
+			}
+		}
 	}
-}
-		
+	
+	需要用到Xpath的相对路径写法。例子 input/../a 就是采取了相对路径写法，才能看到点击选中的效果。
+		import java.util.ArrayList;
+		import java.util.concurrent.TimeUnit;
+
+		import org.openqa.selenium.By;
+		import org.openqa.selenium.WebDriver;
+		import org.openqa.selenium.WebElement;
+		import org.openqa.selenium.chrome.ChromeDriver;
+
+		public class ElementsOption {
+
+			public static void main(String[] args) {
+				// TODO Auto-generated method stub
+				System.setProperty("webdriver.chrome.driver", "./tools/chromedriver.exe");
+
+				String loc = "C:\\Users\\Administrator\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe";
+				System.setProperty("webdriver.chrome.bin", loc);
+
+				WebDriver driver = new ChromeDriver();
+				String url = "https://www.sojump.com/m/2792226.aspx/";
+				driver.get(url);
+				driver.manage().timeouts().implicitlyWait(8, TimeUnit.SECONDS);
+				driver.manage().window().maximize();
+
+				//ArrayList<WebElement> list = (ArrayList<WebElement>) driver.findElements(By.xpath("//*[@id='div5']/div[2]/./span/a"));
+				ArrayList<WebElement> list = (ArrayList<WebElement>) driver.findElements(By.xpath("//*/div[@id='divQuestion']/fieldset/div/div/div/span/input/../a"));
+
+				int n=10;
+				while(n>0) {
+					for(WebElement ele: list) {
+						ele.click();
+					}
+					n--;
+				}
+			}
+		}
 		
 		
 
