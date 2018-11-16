@@ -696,7 +696,7 @@ ArrayList：
 			}
 		}
 
-第十三节：
+第十三节：https://blog.csdn.net/u011541946/article/details/73695454
 	单选和多选按钮操作：
 	package 单选多选;
 
@@ -773,7 +773,40 @@ ArrayList：
 			}
 		}
 		
-		
+
+第十四节：
+	处理Alert弹窗
+	package alter;
+
+	import java.util.ArrayList;
+	import java.util.concurrent.TimeUnit;
+
+	import org.openqa.selenium.WebDriver;
+	import org.openqa.selenium.chrome.ChromeDriver;
+
+	public class AlterAccept {
+
+		public static void main(String[] args) throws InterruptedException{
+			// TODO Auto-generated method stub
+			System.setProperty("webdriver.chrome.driver", "../Selenium_Lesson/tools/chromedriver.exe");
+
+			String loc = "C:\\Users\\Administrator\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe";
+			System.setProperty("webdriver.chrome.bin", loc);
+
+			WebDriver driver = new ChromeDriver();
+			String url = "http://news.cyol.com/node_60799.htm";
+			driver.get(url);
+			driver.manage().timeouts().implicitlyWait(8, TimeUnit.SECONDS);
+			driver.manage().window().maximize();
+
+			System.out.println(driver.switchTo().alert().getText());
+			Thread.sleep(5000);
+			driver.switchTo().alert().accept();
+		}
+	}
+	
+	第一个accept()方法就是我们上面的示例，dismiss()就是点击alert框上面的取消按钮，getText()就是获取alert内部的文字
+	sendKeys方法就像文章开头提到的输入邮件预定内容一样，上面还有两个关于证书的，先不用管，暂时没用过。
 
 
 
