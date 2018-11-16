@@ -853,7 +853,63 @@ ArrayList：
 		}
 	}
 
-      
+
+第十六节：
+	鼠标悬停     
+	有些事件，Selenium没有直接提供方法去操作，像鼠标悬停，一般测试场景鼠标悬停分两种常见：
+		一种是鼠标悬停在某一个元素上方，然后会出现下拉子菜单，
+		第二种就是在搜索输入过程，选择自动补全的字段。
+	关于鼠标悬停，selenium把这个方法放在了Actions.java文件中
+		package 鼠标悬停;
+		import java.util.concurrent.TimeUnit;
+
+		import org.openqa.selenium.By;
+		import org.openqa.selenium.WebDriver;
+		import org.openqa.selenium.WebElement;
+		import org.openqa.selenium.chrome.ChromeDriver;
+		import org.openqa.selenium.interactions.Actions;
+
+		public class Element_Option {
+			public static void main(String[] args) throws Exception {  
+
+		System.setProperty("webdriver.chrome.driver", "../Selenium_Lesson/tools/chromedriver.exe");
+
+				String loc = "C:\\Users\\Administrator\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe";
+				System.setProperty("webdriver.chrome.bin", loc);
+
+			WebDriver driver = new ChromeDriver();  
+
+			driver.manage().window().maximize();  
+
+			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+
+			driver.get("https://www.baidu.com/");  
+
+			Thread.sleep(2000);
+
+			// 设置
+			WebElement settings = driver.findElement(By.xpath("//*[@id='u1']/a[8]"));
+
+			Actions action = new Actions(driver);
+			action.moveToElement(settings).perform();
+
+			driver.findElement(By.linkText("高级搜索")).click();
+			
+			//自动补全
+			driver.navigate().refresh();
+			driver.findElement(By.xpath("//*[@id='kw']")).sendKeys("selenium a");
+
+			WebElement auto_text = driver.findElement(By.xpath("//*[@id='form']/div/ul/li[@data-key='selenium api文档']"));
+
+			Actions action1 = new Actions(driver);
+			action1.moveToElement(auto_text).click().perform(); 
+		    }  
+		}
+		
+
+	
+	
+
 
             
       
